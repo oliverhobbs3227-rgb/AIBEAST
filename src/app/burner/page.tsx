@@ -1,15 +1,16 @@
-import type { Metadata } from 'next';
-import BurnerApp from '@/components/burner/BurnerApp';
+import { redirect } from 'next/navigation';
 
-export const metadata: Metadata = {
-  title: 'Burner Chat — AIBEAST',
-  description: 'Anonymous ephemeral chat with auto-destruct identity.',
-};
+export const dynamic = 'force-dynamic';
+
+function generateRoomId() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < 6; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
 
 export default function BurnerPage() {
-  return (
-    <main className="min-h-screen bg-black py-8 px-4">
-      <BurnerApp />
-    </main>
-  );
+  redirect(`/burner/${generateRoomId()}`);
 }
